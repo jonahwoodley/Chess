@@ -14,10 +14,11 @@
 #include "ui.hpp"
 
 struct Position {
-    int row = 0;
-    int col = 0;
+    int row, col;
 
-    Position() = default;
+    Position()
+        : row(0)
+        , col(0) {}
 
     Position(int r, int c)
         : row(r)
@@ -44,7 +45,6 @@ public:
     SDL_Texture* getTexture(const std::string& textureKey) const;
 
 public:
-    // accessor funcs
     const std::vector<std::vector<Piece>>& getBoard() const {
         return m_board;
     }
@@ -94,23 +94,26 @@ private:
     SDL_Texture* loadTexture(const std::filesystem::path& filePath);
 
 private:
-    SDL_Window* m_window;
-    SDL_Renderer* m_renderer;
-    GameSpecification m_specification;
-    std::vector<Position> m_possibleMoves;
-    std::vector<std::vector<Piece>> m_board;
-    bool m_boardClickEnabled;
-    bool m_gameRunning;
-    std::unordered_map<std::string, Mix_Chunk*> m_sounds;
-    std::unordered_map<std::string, SDL_Texture*> m_textures;
-    std::unique_ptr<class MoveLogic> m_moveLogic;
-    std::unique_ptr<class UI> m_ui;
-    Position m_selectedPiecePosition;
-    PieceColour m_currentTurn;
-    std::array<Piece, 16> m_takenWhitePieces;
-    std::array<Piece, 16> m_takenBlackPieces;
     int m_whiteCaptureCount = 0;
     int m_blackCaptureCount = 0;
+    bool m_boardClickEnabled;
+    bool m_gameRunning;
+
+    Position m_selectedPiecePosition;
+    PieceColour m_currentTurn;
+    GameSpecification m_specification;
+
+    std::vector<Position> m_possibleMoves;
+    std::vector<std::vector<Piece>> m_board;
+    std::unordered_map<std::string, Mix_Chunk*> m_sounds;
+    std::unordered_map<std::string, SDL_Texture*> m_textures;
+    std::array<Piece, 16> m_takenWhitePieces;
+    std::array<Piece, 16> m_takenBlackPieces;
+    std::unique_ptr<class MoveLogic> m_moveLogic;
+    std::unique_ptr<class UI> m_ui;
+
+    SDL_Window* m_window;
+    SDL_Renderer* m_renderer;
 };
 
 #endif

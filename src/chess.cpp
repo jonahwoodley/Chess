@@ -43,7 +43,7 @@ Chess::Chess(const GameSpecification& spec)
         exit(1);
     }
 
-    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
+    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) == -1) {
         std::cerr << "SDL_mixer could not initialized. Mix_Error: " << Mix_GetError() << std::endl;
         SDL_DestroyWindow(m_window);
         SDL_Quit();
@@ -86,7 +86,7 @@ void Chess::loadSounds() {
 
                 if (!sound) {
                     std::cerr << "Failed to load sound: " << fileName << ". Mix_Error: " << Mix_GetError() << std::endl;
-                    exit(1);
+                    continue;
                 }
 
                 m_sounds[key] = sound;
@@ -94,6 +94,7 @@ void Chess::loadSounds() {
         }
     }
 }
+
 void Chess::setupBoard() {
     m_board.clear();
     m_board.resize(m_specification.boardSize, std::vector<Piece>(m_specification.boardSize));

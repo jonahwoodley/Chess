@@ -13,11 +13,13 @@ public:
 private:
     Chess* chess;
 
+private:
     bool isWithinBounds(int row, int col) const;
     bool isSquareEmpty(int row, int col) const;
     bool isOpponentPiece(int row, int col, PieceColour colour) const;
     void tryAddMove(int row, int col, std::vector<struct Position>& moves) const;
     void tryAddCaptureMove(int row, int col, PieceColour colour, std::vector<struct Position>& moves) const;
+
     std::vector<struct Position> getPawnMoves(const Piece& pawn, int row, int col);
     std::vector<struct Position> getKnightMoves(const Piece& knight, int row, int col);
     std::vector<struct Position> getBishopMoves(const Piece& bishop, int row, int col);
